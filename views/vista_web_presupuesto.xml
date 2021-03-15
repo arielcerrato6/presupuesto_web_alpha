@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Boton en el menu principal del portal -->
+    <template id="presupuesto_my_home" name="Portal My Home : Presupuestos" inherit_id="portal.portal_my_home" priority="40">
+          
+          <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+         
+              <form method="POST" t-attf-action="/nuevo/presupuesto/creacion" >
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <button type="action" class="btn btn-primary" groups="base.group_portal" style="float: right; margin-right: 0px; margin-top:5px;">Nuevo Presupuesto</button>
+              </form>
+          </xpath>
+
+    </template>
+
+
+    <!--Plantilla de pagina web de presupuesto-->
+    <template id="portal_create_presupuesto" name="Crear Presupuesto" >
+    
+    <t t-call="portal.portal_layout">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="text-center">Creacion de presupuesto</h1>
+          </div>
+        </div>
+      </div>
+
+      <form action="/envio/presupuesto" method="POST" class="form-horizontal mt32" >
+        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+        <div class="form-group">
+            
+            <!--Nombre Cliente-->
+            <div class="form-group">
+              <label class="col-md-3 col-sm-4 control-label" for="name">Usuario</label>
+                <div class="col-md-7 col-sm-8">
+                  <input id="name" type="text" class="form-control" name="name" t-attf-value="#{name}" required="True"/>
+                  <!--Campos invisibles-->
+                  <input id="empresa" type="hidden" class="form-control" name="empresa" t-attf-value="#{empresa}" required="True" readonly="True" />
+                  <input id="dirrecion_fact" type="hidden" class="form-control" name="dirrecion_fact" t-attf-value="#{dirrecion_fact}" required="True" readonly="True"/> 
+              
+                </div>
+            </div>
+
+            <!--Correo electronico-->
+             <div class="form-group">
+              <label class="col-md-3 col-sm-4 control-label" for="name">Correo electronico</label>
+                <div class="col-md-7 col-sm-8">
+                  <input id="email" type="text" class="form-control" name="email" t-attf-value="#{email}" required="True" readonly="True"/>
+                </div>
+            </div>
+
+            <!--Productos-->
+            <div class="form-group">
+              <label class="col-md-3 col-sm-4 control-label" for="productos">Productos</label>
+              
+              <div class="col-md-7 col-sm-8">
+                <select class="form-control" id="productos" name="productos" t-attf-value="#{productos}" required="True">
+                  <t t-foreach="lista_productos" t-as="cat">
+                    <option t-attf-value="#{cat.id}"><t t-esc="cat.name"/></option>
+                  </t>
+                </select>
+              
+              </div>
+            </div>
+            
+         
+            <!--BOton para enviar-->
+            <div class="form-group">
+              <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
+              </div>
+            </div>
+            
+         
+        </div>
+        
+        
+      </form>
+    </t>
+  </template>
+
+   <template id="presupuesto_thank_you" name="Muchas gracias">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <div class="container mt16">
+                    <h1 class="text-center">Muchas Gracias,  por su orden</h1>
+                    <h3 class="text-muted text-center">Nos pondremos en contacto con usted en breve</h3>
+                </div>
+            </div>
+        </t>
+    </template>
+
+  <!--Plantilla pagina de gracias
+  <record id="presupuesto_gracias" model="website.page">
+
+  
+  </record>
+  -->
+
+
+</odoo>
