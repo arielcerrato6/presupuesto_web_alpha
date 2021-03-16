@@ -51,8 +51,6 @@ class Presupuesto_Controller(http.Controller):
         linea_orden = {
                         'order_id': venta_presupuesto.id,
                         'product_id': produc.id,
-                        'name': produc.description_sale,
-                        'price_unit': produc.list_price,
                         'product_uom': 1,
                         'product_uom_qty': 1,
                         }
